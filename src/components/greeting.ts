@@ -55,7 +55,7 @@ export class GettingComponent extends LitElement {
       <section class="greeting-section">
         <div class="greeting-secttion--text">
           <h2>${this.greeting ? this.greeting : 'Hola!'}</h2>
-          <p>from greeting component!</p>
+          <p>from greeting web component!</p>
         </div>
         <button @click=${this._onClick}>click me</button>
       </section>
