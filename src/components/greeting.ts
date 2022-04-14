@@ -11,9 +11,12 @@ export class GettingComponent extends LitElement {
 
   public render(): TemplateResult {
     return html`
-      <div>
-        <h2>${this.greeting ? this.greeting : 'Hola!'}</h2>
-      </div>
+      <section>
+        <div>
+          <h2>${this.greeting ? this.greeting : 'Hola!'}</h2>
+          <p>from greeting component!</p>
+        </div>
+      </section>
     `;
   }
 }
