@@ -36,7 +36,6 @@ export class GettingComponent extends LitElement {
       padding: 1rem;
       overflow: hidden;
       cursor: pointer;
-
       transition: all .5s ease;
     }
     button:hover {
@@ -52,7 +51,6 @@ export class GettingComponent extends LitElement {
       background-color: black;
       transform: translateY(100%);
       z-index: -1;
-
       transition: all .5s ease;
     }
     button:hover::before {
