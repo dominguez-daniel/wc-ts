@@ -13,7 +13,17 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        loader: 'ts-loader',
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['@babel/preset-env', { targets: 'defaults' }]
+              ]
+            }
+          },
+          'ts-loader'
+        ],
         exclude: /node_modules/,
       }
     ]
