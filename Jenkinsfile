@@ -1,24 +1,22 @@
-pipeline {
-  agent any
-  tools { 
-    nodejs "NodeJS" 
-  }
-  stages {
-    stage('Build') {
-      steps {
-        echo 'Running build automation'
-        sh 'npm install'
-        sh 'npm run build'
-        archiveArtifacts artifacts: 'build/'
-      }
+def remote = [:]
+remote.name = "production"
+remote.host = "159.65.36.208"
+
+node {
+  withCredentials([sshUserPrivateKey(credentialsId: 'production-id', keyFileVariable: 'KEY', passphraseVariable: 'USERPASS', usernameVariable: 'deploy')]) {
+    remote.user = deploy
+    remote.identityFile = KEY
+    stage('Lets see if this works') {
+      writeFile file: 'abc.txt', text: 'Hello World'
     }
   }
 }
 
+
 // pipeline {
 //   agent any
-//   tools {
-//     nodejs "NodeJS"
+//   tools { 
+//     nodejs "NodeJS" 
 //   }
 //   stages {
 //     stage('Build') {
@@ -29,31 +27,6 @@ pipeline {
 //         archiveArtifacts artifacts: 'build/'
 //       }
 //     }
-//     stage('Deploy to Stage') {
-//       when {
-//         branch master
-//       }
-//       steps {
-//         withCredentials([sshUserPrivateKey(credentialsId: '2d10372c-2bfb-4335-b977-859fbe809ed0', usernameVariable: 'USERNAME', keyFileVariable: 'KEY', passphraseVariable: 'USERPASS')]) {
-//           sshPublisher(
-//             failOnError: true,
-//             continueOnError: false,
-//             publishers: [
-//               configName: 'production',
-//               sshCredentials: [
-//                 username: "$USERNAME",
-//                 key: "$KEY",
-//                 encryptedPassphrase: "$USERPASS"
-//               ],
-//               transfers: [
-//                 sourceFiles: 'build',
-//                 remoteDirectory: '/tmp',
-//                 execCommand: 'rm -rf ~/target/* && cp -r ~/tmp/. ~/target/ && rm -rf ~/tmp/*'
-//               ]
-//             ]
-//           )
-//         }
-//       }
-//     }
 //   }
 // }
+
