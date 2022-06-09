@@ -9,7 +9,7 @@ pipeline {
         echo 'Running build automation'
         sh 'npm version'
         sh 'npm install'
-        // sh 'npm run build'
+        sh 'npm run build'
         // archiveArtifacts artifacts: 'build/'
       }
     }
