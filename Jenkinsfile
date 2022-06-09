@@ -40,24 +40,17 @@ pipeline {
             failOnError: true,
             continueOnError: false,
             publishers: [
-              // Publisher description includes the name of your server, and the credentials to access it.
-              sshPublisherDesc(
-                configName: 'production',
-                sshCredentials: [
-                  username: "$USERNAME",
-                  key: "$KEY",
-                  encryptedPassphrase: "$USERPASS"
-                ],
-                transfers: [
-                  sshTransfer(
-                    sourceFiles: 'build',
-                    // take archived dir 'build' and copy it to tmp dir
-                    remoteDirectory: '/tmp',
-                    // remove what is currently in target, and copy over what was moved into tmp to target and delete tmp's contents
-                    execCommand: 'rm -rf ~/target/* && cp -r ~/tmp/. ~/target/ && rm -rf ~/tmp/*'
-                  )
-                ]
-              )
+              configName: 'production',
+              sshCredentials: [
+                username: "$USERNAME",
+                key: "$KEY",
+                encryptedPassphrase: "$USERPASS"
+              ],
+              transfers: [
+                sourceFiles: 'build',
+                remoteDirectory: '/tmp',
+                execCommand: 'rm -rf ~/target/* && cp -r ~/tmp/. ~/target/ && rm -rf ~/tmp/*'
+              ]
             ]
           )
         }
