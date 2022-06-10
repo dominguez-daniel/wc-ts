@@ -25,7 +25,6 @@ pipeline {
             publishers: [
               sshPublisherDesc(
                 configName: 'production',
-                verbose: true,
                 sshCredentials: [
                   username: '$USERNAME',
                   key: '$KEY'
