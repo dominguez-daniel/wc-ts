@@ -26,7 +26,7 @@ pipeline {
                 configName: 'production',
                 verbose: true,
                 sshCredentials: [
-                  username: '$USERNAME'
+                  username: '$USERNAME',
                   key: '$KEY'
                 ],
                 transfers: [
