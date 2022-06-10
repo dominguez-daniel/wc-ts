@@ -17,7 +17,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        withCredentials([sshUserPrivateKey(credentialsId: 'production-id', usernameVariable: 'USERNAME', keyFileVariable: 'KEY', passphraseVariable: 'USERPASS')]) {
+        withCredentials([sshUserPrivateKey(credentialsId: 'production-id', usernameVariable: 'deploy', keyFileVariable: 'KEY', passphraseVariable: 'USERPASS')]) {
           sshPublisher(
             failOnError: true,
             continueOnError: false,
@@ -26,7 +26,7 @@ pipeline {
                 configName: 'production',
                 verbose: true,
                 sshCredentials: [
-                  username: '$USERNAME',
+                  username: 'deploy',
                   encryptedPassphrase: '$USERPASS',
                   key: '$KEY'
                 ],
