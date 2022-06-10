@@ -25,9 +25,9 @@ pipeline {
               sshPublisherDesc(
                 configName: 'production',
                 sshCredentials: [
-                  username: "$USERNAME",
-                  encryptedPassphrase: "$USERPASS",
-                  key: "$KEY"
+                  username: '$USERNAME',
+                  encryptedPassphrase: '$USERPASS',
+                  key: '$KEY'
                 ],
                 transfers: [
                   sshTransfer(
