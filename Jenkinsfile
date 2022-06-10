@@ -17,28 +17,30 @@ pipeline {
         branch 'master'
       }
       steps {
-        withCredentials([sshUserPrivateKey(credentialsId: 'production-id', usernameVariable: 'USERNAME', keyFileVariable: 'KEY')]) {
-          sshPublisher(
-            failOnError: true,
-            continueOnError: false,
-            publishers: [
-              sshPublisherDesc(
-                configName: 'production',
-                verbose: true,
-                sshCredentials: [
-                  username: '$USERNAME',
-                  key: '$KEY'
-                ],
-                transfers: [
-                  sshTransfer(
-                    sourceFiles: 'build',
-                    remoteDirectory: '/tmp',
-                    execCommand: 'rm -rf ~/target/* && cp -r ~/tmp/. ~/target/ && rm -rf ~/tmp/*'
-                  )
-                ]
-              )
-            ]
-          )
+        step([$class:'BapSshPromotionPublisherPlugin']) {
+          withCredentials([sshUserPrivateKey(credentialsId: 'production-id', usernameVariable: 'USERNAME', keyFileVariable: 'KEY')]) {
+            sshPublisher(
+              failOnError: true,
+              continueOnError: false,
+              publishers: [
+                sshPublisherDesc(
+                  configName: 'production',
+                  verbose: true,
+                  sshCredentials: [
+                    username: '$USERNAME',
+                    key: '$KEY'
+                  ],
+                  transfers: [
+                    sshTransfer(
+                      sourceFiles: 'build',
+                      remoteDirectory: '/tmp',
+                      execCommand: 'rm -rf ~/target/* && cp -r ~/tmp/. ~/target/ && rm -rf ~/tmp/*'
+                    )
+                  ]
+                )
+              ]
+            )
+          }
         }
       }
     }
