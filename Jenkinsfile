@@ -16,17 +16,18 @@ pipeline {
       when {
         branch 'master'
       }
-
-      steps([$class:'BapSshPromotionPublisherPlugin']) {
-        withCredentials([sshUserPrivateKey(credentialsId: 'production-id', usernameVariable: 'USERNAME', keyFileVariable: 'KEY')]) {
+      steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'production-id', usernameVariable: 'USERNAME', keyFileVariable: 'KEY', passphraseVariable: 'USERPASS')]) {
           sshPublisher(
             failOnError: true,
             continueOnError: false,
             publishers: [
               sshPublisherDesc(
                 configName: 'production',
+                verbose: true,
                 sshCredentials: [
                   username: '$USERNAME',
+                  encryptedPassphrase: '$USERPASS',
                   key: '$KEY'
                 ],
                 transfers: [
@@ -41,7 +42,6 @@ pipeline {
           )
         }
       }
-  
     }
   }
 }
