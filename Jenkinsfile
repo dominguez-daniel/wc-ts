@@ -27,8 +27,8 @@ pipeline {
                 verbose: true,
                 sshCredentials: [
                   username: 'deploy',
-                  encryptedPassphrase: '$USERPASS',
-                  key: '$KEY'
+                  encryptedPassphrase: 'iamjenkins',
+                  key: '/var/lib/jenkins/.ssh/access'
                 ],
                 transfers: [
                   sshTransfer(
