@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Deploy to Stage') {
       when {
-        branch master
+        branch 'master'
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'production-id', usernameVariable: 'USERNAME', keyFileVariable: 'KEY', passphraseVariable: 'USERPASS')]) {
@@ -22,17 +22,21 @@ pipeline {
             failOnError: true,
             continueOnError: false,
             publishers: [
-              configName: 'production',
-              sshCredentials: [
-                username: "$USERNAME",
-                key: "$KEY",
-                encryptedPassphrase: "$USERPASS"
-              ],
-              transfers: [
-                sourceFiles: 'build',
-                remoteDirectory: '/tmp',
-                execCommand: 'rm -rf ~/target/* && cp -r ~/tmp/. ~/target/ && rm -rf ~/tmp/*'
-              ]
+              sshPublisherDesc(
+                configName: 'production',
+                sshCredentials: [
+                  username: "$USERNAME",
+                  encryptedPassphrase: "$USERPASS",
+                  key: "$KEY"
+                ],
+                transfers: [
+                  sshTransfer(
+                    sourceFiles: 'build',
+                    remote: '/tmp',
+                    execCommand: 'rm -rf ~/target/* && cp -r ~/tmp/. ~/target/ && rm -rf ~/tmp/*'
+                  )
+                ]
+              )
             ]
           )
         }
@@ -40,6 +44,29 @@ pipeline {
     }
   }
 }
+
+
+// steps {
+//   withCredentials([sshUserPrivateKey(credentialsId: 'production-id', usernameVariable: 'USERNAME', keyFileVariable: 'KEY', passphraseVariable: 'USERPASS')]) {
+//     sshPublisher(
+//       failOnError: true,
+//       continueOnError: false,
+//       publishers: [
+//         configName: 'production',
+//         sshCredentials: [
+//           username: "$USERNAME",
+//           key: "$KEY",
+//           encryptedPassphrase: "$USERPASS"
+//         ],
+//         transfers: [
+//           sourceFiles: 'build',
+//           remoteDirectory: '/tmp',
+//           execCommand: 'rm -rf ~/target/* && cp -r ~/tmp/. ~/target/ && rm -rf ~/tmp/*'
+//         ]
+//       ]
+//     )
+//   }
+// }
 
 
 // def remote = [:]
