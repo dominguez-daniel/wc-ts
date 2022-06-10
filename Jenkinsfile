@@ -45,7 +45,6 @@ pipeline {
   }
 }
 
-
 // steps {
 //   withCredentials([sshUserPrivateKey(credentialsId: 'production-id', usernameVariable: 'USERNAME', keyFileVariable: 'KEY', passphraseVariable: 'USERPASS')]) {
 //     sshPublisher(
