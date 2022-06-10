@@ -17,7 +17,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        withCredentials([sshUserPrivateKey(credentialsId: 'box-id', usernameVariable: 'USERNAME', keyFileVariable: 'KEY', passphraseVariable: 'USERPASS')]) {
+        withCredentials([sshUserPrivateKey(credentialsId: 'production-id', usernameVariable: 'USERNAME', keyFileVariable: 'KEY', passphraseVariable: 'USERPASS')]) {
           sshPublisher(
             failOnError: true,
             continueOnError: false,
