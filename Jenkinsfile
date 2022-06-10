@@ -32,7 +32,7 @@ pipeline {
                 transfers: [
                   sshTransfer(
                     sourceFiles: 'build',
-                    remote: '/tmp',
+                    remoteDirectory: '/tmp',
                     execCommand: 'rm -rf ~/target/* && cp -r ~/tmp/. ~/target/ && rm -rf ~/tmp/*'
                   )
                 ]
